@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIA JNM PEDIDOS</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#000;
+      color:#fff;
+    }
+
+    header{
+      background:linear-gradient(to right,#b30000,#ffb300);
+      padding:20px;
+    }
+
+    .container{
+      width:90%;
+      max-width:1200px;
+      margin:auto;
+    }
+
+    .topo{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .logo h1{
+      font-size:50px;
+      color:#fff;
+    }
+
+    .logo p{
+      color:#ffe082;
+      margin-top:10px;
+    }
+
+    .carrinho-btn{
+      background:#000;
+      color:#ffcc00;
+      padding:15px 25px;
+      border-radius:15px;
+      font-weight:bold;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    .banner{
+      position:relative;
+      height:500px;
+      overflow:hidden;
+    }
+
+    .banner img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0.4;
+    }
+
+    .banner-content{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      text-align:center;
+      width:90%;
+    }
+
+    .banner-content h2{
+      font-size:60px;
+      color:#ffcc00;
+    }
+
+    .banner-content h3{
+      font-size:35px;
+      margin-top:20px;
+    }
+
+    .preco-banner{
+      font-size:90px;
+      color:#ff0000;
+      font-weight:bold;
+      margin-top:20px;
+    }
+
+    .pedido-btn{
+      margin-top:30px;
+      background:#00a000;
+      color:#fff;
+      border:none;
+      padding:20px 40px;
+      border-radius:20px;
+      font-size:25px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .produtos{
+      padding:80px 0;
+    }
+
+    .titulo{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:40px;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .titulo h2{
+      color:#ffcc00;
+      font-size:45px;
+    }
+
+    .promocao{
+      background:#c40000;
+      padding:10px 20px;
+      border-radius:30px;
+      font-weight:bold;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:#111;
+      border-radius:25px;
+      overflow:hidden;
+      border:1px solid #222;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      border-color:#ffcc00;
+      transform:translateY(-5px);
+    }
+
+    .card img{
+      width:100%;
+      height:250px;
+      object-fit:cover;
+    }
+
+    .card-content{
+      padding:25px;
+    }
+
+    .card-content h3{
+      font-size:35px;
+    }
+
+    .preco{
+      font-size:40px;
+      color:#ffcc00;
+      font-weight:bold;
+      margin-top:15px;
+    }
+
+    .add-btn{
+      width:100%;
+      margin-top:25px;
+      padding:18px;
+      border:none;
+      border-radius:15px;
+      background:#c40000;
+      color:#fff;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .carrinho{
+      background:#050505;
+      padding:80px 0;
+    }
+
+    .carrinho-topo{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:40px;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .carrinho-topo h2{
+      font-size:45px;
+      color:#ffcc00;
+    }
+
+    .total{
+      color:#00cc44;
+      font-size:35px;
+      font-weight:bold;
+    }
+
+    .item{
+      background:#111;
+      padding:25px;
+      border-radius:25px;
+      margin-bottom:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .item h3{
+      font-size:30px;
+    }
+
+    .controles{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .controle-btn{
+      width:45px;
+      height:45px;
+      border:none;
+      border-radius:50%;
+      font-size:25px;
+      cursor:pointer;
+      color:#fff;
+    }
+
+    .menos{
+      background:#c40000;
+    }
+
+    .mais{
+      background:#00a000;
+    }
+
+    .finalizar{
+      width:100%;
+      margin-top:40px;
+      background:#00a000;
+      border:none;
+      padding:25px;
+      border-radius:25px;
+      color:#fff;
+      font-size:25px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    footer{
+      padding:50px 20px;
+      text-align:center;
+      border-top:1px solid #222;
+    }
+
+    footer h3{
+      color:#ffcc00;
+      font-size:40px;
+    }
+
+    footer p{
+      margin-top:15px;
+      color:#999;
+      font-size:20px;
+    }
+
+    footer .zap{
+      margin-top:20px;
+      color:#00cc44;
+      font-size:28px;
+      font-weight:bold;
+    }
+
+    @media(max-width:768px){
+
+      .banner-content h2{
+        font-size:40px;
+      }
+
+      .preco-banner{
+        font-size:60px;
+      }
+
+      .titulo h2,
+      .carrinho-topo h2{
+        font-size:35px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container topo">
+
+    <div class="logo">
+      <h1>CIA JNM</h1>
+      <p>Pão quentinho todos os dias!</p>
+    </div>
+
+    <button class="carrinho-btn">
+      🛒 <span id="contador">0</span> itens
+    </button>
+
+  </div>
+</header>
+
+<section class="banner">
+
+  <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1600&auto=format&fit=crop">
+
+  <div class="banner-content">
+
+    <h2>SUPER PROMOÇÃO</h2>
+
+    <h3>PÃO CASEIRO</h3>
+
+    <div class="preco-banner">
+      R$ 5,00
+    </div>
+
+    <button class="pedido-btn" onclick="finalizarPedido()">
+      FAZER PEDIDO
+    </button>
+
+  </div>
+
+</section>
+
+<section class="produtos">
+
+  <div class="container">
+
+    <div class="titulo">
+      <h2>Nossos Produtos</h2>
+
+      <div class="promocao">
+        Promoções do Dia
+      </div>
+    </div>
+
+    <div class="grid" id="produtos"></div>
+
+  </div>
+
+</section>
+
+<section class="carrinho">
+
+  <div class="container">
+
+    <div class="carrinho-topo">
+
+      <h2>Carrinho</h2>
+
+      <div class="total">
+        Total: R$ <span id="total">0</span>,00
+      </div>
+
+    </div>
+
+    <div id="listaCarrinho"></div>
+
+    <button class="finalizar" onclick="finalizarPedido()">
+      FINALIZAR PEDIDO NO WHATSAPP
+    </button>
+
+  </div>
+
+</section>
+
+<footer>
+
+  <h3>CIA JNM PEDIDOS</h3>
+
+  <p>Pão quentinho todos os dias!</p>
+
+  <div class="zap">
+    WhatsApp: (77) 98122-2468
+  </div>
+
+</footer>
+
+<script>
+
+const produtos = [
+  {
+    id:1,
+    nome:"Pão Caseiro",
+    preco:5,
+    imagem:"https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop"
+  },
+
+  {
+    id:2,
+    nome:"Rosca Caseira",
+    preco:8,
+    imagem:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=1200&auto=format&fit=crop"
+  },
+
+  {
+    id:3,
+    nome:"Broa",
+    preco:10,
+    imagem:"https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=1200&auto=format&fit=crop"
+  }
+];
+
+let carrinho = [];
+
+function renderProdutos(){
+
+  const area = document.getElementById("produtos");
+
+  area.innerHTML = "";
+
+  produtos.forEach(produto => {
+
+    area.innerHTML += `
+    
+      <div class="card">
+
+        <img src="${produto.imagem}">
+
+        <div class="card-content">
+
+          <h3>${produto.nome}</h3>
+
+          <div class="preco">
+            R$ ${produto.preco},00
+          </div>
+
+          <button class="add-btn" onclick="adicionarCarrinho(${produto.id})">
+            Adicionar ao Carrinho
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+function adicionarCarrinho(id){
+
+  const produto = produtos.find(p => p.id === id);
+
+  const item = carrinho.find(p => p.id === id);
+
+  if(item){
+    item.quantidade++;
+  }else{
+    carrinho.push({...produto, quantidade:1});
+  }
+
+  atualizarCarrinho();
+
+}
+
+function removerCarrinho(id){
+
+  const item = carrinho.find(p => p.id === id);
+
+  if(item.quantidade > 1){
+    item.quantidade--;
+  }else{
+    carrinho = carrinho.filter(p => p.id !== id);
+  }
+
+  atualizarCarrinho();
+
+}
+
+function atualizarCarrinho(){
+
+  const lista = document.getElementById("listaCarrinho");
+
+  lista.innerHTML = "";
+
+  let total = 0;
+
+  carrinho.forEach(item => {
+
+    total += item.preco * item.quantidade;
+
+    lista.innerHTML += `
+
+      <div class="item">
+
+        <div>
+
+          <h3>${item.nome}</h3>
+
+          <p>R$ ${item.preco},00</p>
+
+        </div>
+
+        <div class="controles">
+
+          <button class="controle-btn menos" onclick="removerCarrinho(${item.id})">
+            -
+          </button>
+
+          <span>${item.quantidade}</span>
+
+          <button class="controle-btn mais" onclick="adicionarCarrinho(${item.id})">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  document.getElementById("contador").innerText = carrinho.length;
+
+  document.getElementById("total").innerText = total;
+
+}
+
+function finalizarPedido(){
+
+  if(carrinho.length === 0){
+    alert("Adicione produtos ao carrinho.");
+    return;
+  }
+
+  let mensagem = "Olá! Quero fazer um pedido:%0A%0A";
+
+  carrinho.forEach(item => {
+
+    mensagem += `- ${item.nome} x${item.quantidade} = R$ ${item.preco * item.quantidade}%0A`;
+
+  });
+
+  const total = carrinho.reduce((acc,item)=> acc + item.preco * item.quantidade,0);
+
+  mensagem += `%0A💰 Total: R$ ${total},00`;
+
+  const telefone = "5577981222468";
+
+  window.open(`https://wa.me/${telefone}?text=${mensagem}`);
+
+}
+
+renderProdutos();
+
+</script>
+
+</body>
+</html>
